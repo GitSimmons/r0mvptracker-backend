@@ -1,5 +1,6 @@
 //import * as functions from "firebase-functions";
 import * as chromium from "chrome-aws-lambda";
+import { filterMVPs } from "./filterMVPs";
 
 export const MVPTable = async () => {
   // If stage is dev, use local chromium
@@ -14,22 +15,21 @@ export const MVPTable = async () => {
     defaultViewport: chromium.defaultViewport,
   });
   const page = await browser.newPage();
-  // In order to minimize server load, we use a whitelist
-  // 1. Intercept network requests.
+  // In order to minimize server load, use whitelist resources
   await page.setRequestInterception(true);
   page.on("request", (req) => {
-    // 2. Ignore requests for resources that don't produce DOM
-    // (images, stylesheets, media).
     const whitelist = ["document", "script", "xhr", "fetch"];
     if (!whitelist.includes(req.resourceType())) {
       return req.abort();
     }
-    // 3. Pass through all other requests.
-    req.continue();
+    return req.continue();
   });
   const url = "http://www.ragna0.com/ranking/mvp/";
   await page.goto(url);
-  const MVPs = ["somevalues"];
+
+  let MVPs = [];
+  MVPs = ["somevalue", "Baphomet", "Dets"];
+  MVPs = filterMVPs(MVPs);
   await browser.close();
   return MVPs;
 };
