@@ -1,4 +1,4 @@
-import { MVP } from "./getDataFromRows";
+import { MVP } from "./types";
 
 export const MVPWhitelist: string[] = [
   "Eddga",
