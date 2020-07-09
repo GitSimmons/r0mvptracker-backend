@@ -1,4 +1,6 @@
-const MVPWhitelist: string[] = [
+import { MVP } from "./getDataFromRows";
+
+export const MVPWhitelist: string[] = [
   "Eddga",
   "Tao Gunka",
   "Amon Ra",
@@ -28,7 +30,5 @@ const MVPWhitelist: string[] = [
   "Valkyrie Randgris",
   //    "Bone Detardeurus""
 ];
-
-export const filterMVPs = (MVPs: string[]) =>
-  MVPs.filter((MVP) => MVPWhitelist.includes(MVP));
-
+export const filterMVPs = (MVPs: MVP[]) =>
+  MVPs.filter((mvp) => MVPWhitelist.includes(mvp.name));
