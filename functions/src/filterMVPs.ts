@@ -26,8 +26,8 @@ export const MVPWhitelist: string[] = [
   "Orc Lord",
   "Stormy Knight",
   "Kraken",
-  //"Detardeurus",
-  //"Valkyrie Randgris",
+  "Detardeurus",
+  "Valkyrie Randgris",
   //"Bone Detardeurus""
 ];
 export const filterMVPs = (MVPs: MVP[]) =>
