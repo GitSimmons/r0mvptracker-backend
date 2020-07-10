@@ -8,8 +8,17 @@ if (admin.apps.length === 0) {
 }
 let db = admin.firestore();
 
-exports.addLatestKills = functions.pubsub
-  .schedule("every 5 minutes")
+const runtimeOpts: {
+  timeoutSeconds: number;
+  memory: "512MB" | "1GB" | "2GB";
+} = {
+  timeoutSeconds: 10,
+  memory: "512MB",
+};
+
+exports.addLatestKills = functions
+  .runWith(runtimeOpts)
+  .pubsub.schedule("every 5 minutes")
   .onRun(async () => {
     // 1. scrape latest kills
     const MVPs: MVP[] = await scrapeLatestKills();

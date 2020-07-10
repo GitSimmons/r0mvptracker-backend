@@ -36,10 +36,10 @@ export const scrapeLatestKills: () => Promise<any> = async () => {
     try {
       // 1.3 In the cloud, use chrome-aws-lambda's bundled chromium
       browser = await chromium.puppeteer.launch({
-        args: chromium.args,
-        defaultViewport: chromium.defaultViewport,
+        args: await chromium.args,
+        defaultViewport: await chromium.defaultViewport,
         executablePath: await chromium.executablePath,
-        headless: chromium.headless,
+        headless: await chromium.headless,
         ignoreHTTPSErrors: true,
       });
     } catch (error) {
