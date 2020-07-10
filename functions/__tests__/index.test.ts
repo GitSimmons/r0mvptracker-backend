@@ -11,7 +11,7 @@ const fireStoreConfig = {
 
 const testEnv = fireBaseTest(
   fireStoreConfig,
-  path.resolve("src/zeromvp-dev-key.json")
+  path.resolve("__tests__/zeromvp-dev-key.json")
 );
 
 describe("Cloud Functions", () => {
