@@ -8,4 +8,7 @@ typings/
 # Make an exception for jest config
 !**/jest.config.js
 
+# Firebase key
+*key.json
+
 node_modules/
