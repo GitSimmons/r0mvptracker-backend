@@ -18,7 +18,7 @@ const runtimeOpts: {
 
 exports.addLatestKills = functions
   .runWith(runtimeOpts)
-  .pubsub.schedule("every 5 minutes")
+  .pubsub.schedule("every 3 minutes")
   .onRun(async () => {
     // 1. scrape latest kills
     const MVPs: MVP[] = await scrapeLatestKills();
