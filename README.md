@@ -17,8 +17,10 @@ Currently the function updates 2 collections, 'mvps' which contains the latest m
 2. Setup a new firebase account with Google
 3. Install firebase CLI `$ npm install -g firebase-tools`
 4. Log into firebase `$ firebase login`
-5. Run `$ firebase init` and connect to your project. Select typescript when it asks. Notably this should create a `.firebaserc` and a `firebase.json`, which are used to specify project details.
-6. To deploy: use `$ firebase deploy --only functions'`
+5. Run `$ firebase init functions` and connect to your project. Select typescript when it asks. Notably this should create a `.firebaserc` and a `firebase.json`, which are used to specify project details.
+  * Double check it doesn't overwrite `package.json` or `index.ts`. In `package.json`, there's an important key `"engines": {"node": "10"}`, that will cause the  function to fail if it's reset to the default "8".
+6. To build: use `$ npm run build"`
+7. To deploy: use `$ firebase deploy --only functions` or `$ npm run deploy`
 
 ## Testing
 ### Testing setup
