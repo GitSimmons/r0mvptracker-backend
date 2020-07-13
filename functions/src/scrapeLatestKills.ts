@@ -47,6 +47,13 @@ export const scrapeLatestKills: () => Promise<any> = async () => {
     }
   }
   const page = await browser.newPage();
+  page.on("response", (response) => {
+    if (response!.status() !== 200) {
+      throw new Error(
+        `Received response status of ${response.status()}, expect 200`
+      );
+    }
+  });
   // 2. Intercept requests for things we don't need
   await page.setRequestInterception(true);
   page.on("request", (req: any) => {
@@ -57,7 +64,7 @@ export const scrapeLatestKills: () => Promise<any> = async () => {
     return req.continue();
   });
   // 3. Navigate to site
-  const url = "http://www.ragna0.com/mvplogs";
+  const url = "https://www.ragna0.com/mvplogs";
   await page.goto(url);
   // Wait until the table loads on the page
   await page.waitForSelector("table.horizontal-table");
