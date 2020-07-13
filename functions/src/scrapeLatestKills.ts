@@ -47,6 +47,7 @@ export const scrapeLatestKills: () => Promise<any> = async () => {
     }
   }
   const page = await browser.newPage();
+  // Throw an error if the server response isn't 200 OK
   page.on("response", (response) => {
     if (response!.status() !== 200) {
       throw new Error(
