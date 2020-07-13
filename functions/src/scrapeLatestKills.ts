@@ -57,7 +57,7 @@ export const scrapeLatestKills: () => Promise<any> = async () => {
     return req.continue();
   });
   // 3. Navigate to site
-  const url = "http://www.ragna0.com/ranking/mvp/";
+  const url = "http://www.ragna0.com/mvplogs";
   await page.goto(url);
   // Wait until the table loads on the page
   await page.waitForSelector("table.horizontal-table");
