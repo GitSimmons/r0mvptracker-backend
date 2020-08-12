@@ -2,8 +2,8 @@ import { MVP } from "./types";
 
 export const getDataFromRows: () => MVP[] = () => {
   const rowNodes = document.querySelectorAll("tr");
-  let MVPs: MVP[] = [];
-  let names: string[] = [];
+  const MVPs: MVP[] = [];
+  const names: string[] = [];
   // TODO: convert to getElementsByTagName for performance
   // NodeLists are only recently iteratable with forEach, so we use an older way
   Array.prototype.forEach.call(rowNodes, (row: HTMLTableRowElement) => {
@@ -11,7 +11,7 @@ export const getDataFromRows: () => MVP[] = () => {
     const columns = row.children;
     const lastKilled = columns[0].textContent!.trim();
     const whoKilled = columns[1].textContent!.trim();
-    let name = columns[2].textContent!.trim();
+    const name = columns[2].textContent!.trim();
     // Because latest kills are at the top, ignore repeats
     // TODO: consider a For Loop instead of indexOf for performance reasons
     if (names.indexOf(name) === -1) {

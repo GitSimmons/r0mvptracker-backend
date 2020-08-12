@@ -1,9 +1,7 @@
 import * as chromium from "chrome-aws-lambda";
-import { MVPWhitelist } from "./filterMVPs";
-import { getDataFromRows } from "./getDataFromRows";
-import { MVP } from "./types";
+import { getDataFromRankingRows } from "./getDataFromRankingRows";
 
-export const scrapeLatestKills: () => Promise<any> = async () => {
+export const scrapeLatestRankings: () => Promise<any> = async () => {
   // 1. Load Chromium in Puppeteer
   let browser = null;
   if (
@@ -66,15 +64,14 @@ export const scrapeLatestKills: () => Promise<any> = async () => {
     return req.continue();
   });
   // 3. Navigate to site
-  const url = "https://www.ragna0.com/mvplogs";
+  const url = "https://www.ragna0.com/ranking/mvp/";
   await page.goto(url);
   // Wait until the table loads on the page
   await page.waitForSelector("table.horizontal-table");
   // 4. Get the MVPs from the table
   // The logic in page.evaluate will run in the chromium
   // instance, so it's difficult to refactor out pieces
-  let MVPs = await page.evaluate(getDataFromRows);
-  MVPs = MVPs.filter((mvp: MVP) => MVPWhitelist.includes(mvp.name));
+  const Rankings = await page.evaluate(getDataFromRankingRows);
   // 5. Close the browser before if not on dev
   // browser.process() returns null if the instance was created with browser.connect()
   if (browser.process()) {
@@ -83,5 +80,5 @@ export const scrapeLatestKills: () => Promise<any> = async () => {
     await page.close();
     browser.disconnect();
   }
-  return MVPs;
+  return Rankings;
 };

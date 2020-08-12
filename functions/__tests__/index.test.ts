@@ -31,4 +31,14 @@ describe("Cloud Functions", () => {
       }
     });
   });
+  it("should update the DB with the latest Rankings", async () => {
+    jest.setTimeout(30000);
+    const wrapped = testEnv.wrap(myFunctions.addLatestRankings);
+    // Run the function, no arguments needed
+    await wrapped(null);
+    const rankings = admin.firestore().collection("misc").doc("rankings");
+    await rankings.get().then((doc) => {
+      expect(doc.data()).toBeTruthy();
+    });
+  });
 });

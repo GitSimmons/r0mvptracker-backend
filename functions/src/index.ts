@@ -1,12 +1,13 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { scrapeLatestKills } from "./scrapeLatestKills";
+import { scrapeLatestRankings } from "./scrapeLatestRankings";
 import { MVP } from "./types";
 
 if (admin.apps.length === 0) {
   admin.initializeApp();
 }
-let db = admin.firestore();
+const db = admin.firestore();
 
 const runtimeOpts: {
   timeoutSeconds: number;
@@ -38,5 +39,15 @@ exports.addLatestKills = functions
       .doc("lastUpdated")
       .set({ lastUpdated: new Date() });
     // Cloud fns are asynchronous and should return null, an object or a promise
+    return null;
+  });
+exports.addLatestRankings = functions
+  .runWith(runtimeOpts)
+  .pubsub.schedule("every 24 hours")
+  .onRun(async () => {
+    // 1. scrape latest rankings
+    const Rankings = await scrapeLatestRankings();
+    // 2. Don't merge, just replace
+    await db.collection("misc").doc("rankings").set({ rankings: Rankings });
     return null;
   });
