@@ -1,5 +1,5 @@
 import * as chromium from "chrome-aws-lambda";
-import { MVPWhitelist } from "./filterMVPs";
+import { MVPAllowList } from "./filterMVPs";
 import { getDataFromRows } from "./getDataFromRows";
 import { MVP } from "./types";
 
@@ -59,8 +59,8 @@ export const scrapeLatestKills: () => Promise<any> = async () => {
   // 2. Intercept requests for things we don't need
   await page.setRequestInterception(true);
   page.on("request", (req: any) => {
-    const whitelist = ["document"];
-    if (!whitelist.includes(req.resourceType())) {
+    const allowList = ["document"];
+    if (!allowList.includes(req.resourceType())) {
       return req.abort();
     }
     return req.continue();
@@ -74,7 +74,7 @@ export const scrapeLatestKills: () => Promise<any> = async () => {
   // The logic in page.evaluate will run in the chromium
   // instance, so it's difficult to refactor out pieces
   let MVPs = await page.evaluate(getDataFromRows);
-  MVPs = MVPs.filter((mvp: MVP) => MVPWhitelist.includes(mvp.name));
+  MVPs = MVPs.filter((mvp: MVP) => MVPAllowList.includes(mvp.name));
   // 5. Close the browser before if not on dev
   // browser.process() returns null if the instance was created with browser.connect()
   if (browser.process()) {

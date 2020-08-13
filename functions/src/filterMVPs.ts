@@ -1,6 +1,6 @@
 import { MVP } from "./types";
 
-export const MVPWhitelist: string[] = [
+export const MVPAllowList: string[] = [
   "Eddga",
   "Tao Gunka",
   "Amon Ra",
@@ -28,7 +28,10 @@ export const MVPWhitelist: string[] = [
   "Kraken",
   "Detardeurus",
   "Valkyrie Randgris",
-  //"Bone Detardeurus""
+  "RSX-0806",
+  "Bone Detardeurus",
+  "Mistress ⚔️",
+  "Moonlight Flower ⚔️",
 ];
 export const filterMVPs = (MVPs: MVP[]) =>
-  MVPs.filter((mvp) => MVPWhitelist.includes(mvp.name));
+  MVPs.filter((mvp) => MVPAllowList.includes(mvp.name));

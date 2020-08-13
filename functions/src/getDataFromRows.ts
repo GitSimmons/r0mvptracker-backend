@@ -11,7 +11,12 @@ export const getDataFromRows: () => MVP[] = () => {
     const columns = row.children;
     const lastKilled = columns[0].textContent!.trim();
     const whoKilled = columns[1].textContent!.trim();
-    const name = columns[2].textContent!.trim();
+    let name = columns[2].textContent!.trim();
+    const field = columns[4].textContent!.trim();
+    // append a sweet crossed sword emoji to guild dungeon MVPs
+    if (field.includes("gld_dun")) {
+      name += " ⚔️";
+    }
     // Because latest kills are at the top, ignore repeats
     // TODO: consider a For Loop instead of indexOf for performance reasons
     if (names.indexOf(name) === -1) {

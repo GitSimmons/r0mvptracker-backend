@@ -57,8 +57,8 @@ export const scrapeLatestRankings: () => Promise<any> = async () => {
   // 2. Intercept requests for things we don't need
   await page.setRequestInterception(true);
   page.on("request", (req: any) => {
-    const whitelist = ["document"];
-    if (!whitelist.includes(req.resourceType())) {
+    const allowList = ["document"];
+    if (!allowList.includes(req.resourceType())) {
       return req.abort();
     }
     return req.continue();
