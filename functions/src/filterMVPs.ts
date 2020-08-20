@@ -32,6 +32,11 @@ export const MVPAllowList: string[] = [
   "Bone Detardeurus",
   "Mistress ⚔️",
   "Moonlight Flower ⚔️",
+  "Baphomet ⚔️",
+  "Doppelganger ⚔️",
+  "Valkyrie Reginleif",
+  "Valkyrie Ingrid",
+  "Giant Octopus",
 ];
 export const filterMVPs = (MVPs: MVP[]) =>
   MVPs.filter((mvp) => MVPAllowList.includes(mvp.name));
