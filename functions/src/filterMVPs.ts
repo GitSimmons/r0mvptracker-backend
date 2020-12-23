@@ -38,6 +38,7 @@ export const MVPAllowList: string[] = [
   "Giant Octopus",
   "Bacsojin",
   "Evil Snake Lord",
+  "Lady Tanee",
 ];
 export const filterMVPs = (MVPs: MVP[]) =>
   MVPs.filter((mvp) => MVPAllowList.includes(mvp.name));
