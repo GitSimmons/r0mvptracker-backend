@@ -5,8 +5,8 @@
 import { getDataFromRows } from "../src/getDataFromRows";
 import { MVP } from "../src/types";
 
-const makeRowFromMVPObject = ({ name, whoKilled, lastKilled }: MVP) => `
-<tr><td>${lastKilled}</td><td>${whoKilled}</td><td>${name}</td></tr> `;
+const makeRowFromMVPObject = ({ name, whoKilled, lastKilled, field }: MVP) => `
+<tr><td>${lastKilled}</td><td>${whoKilled}</td><td>${name}</td><td></td><td>${field}</td></tr> `;
 
 const setupTableWithMVPs = (MVPs: MVP[]) => {
   const headerRow = `
@@ -14,6 +14,8 @@ const setupTableWithMVPs = (MVPs: MVP[]) => {
       <td> timestamp </td>
       <td> char_id </td>
       <td> mvp_name </td>
+      <td> iunno, </td>
+      <td> field </td>
     </tr>
   `;
   document.body.innerHTML =
@@ -75,5 +77,49 @@ describe("Parsing the MVP Table", () => {
     setupTableWithMVPs(sampleMVPsWithDuplicateKill);
     const MVPs = getDataFromRows();
     expect(MVPs).toEqual([sampleMVPsWithDuplicateKill[0]]);
+  });
+
+  it("it should only count valkyries from odin_past", () => {
+    const valkyriesInTheWrongPlaces = [
+      {
+        name: "Valkyrie Reginleif",
+        whoKilled: "xxMVPKillerxx",
+        lastKilled: "0000",
+        field: "odin_past",
+      },
+      {
+        name: "Valkyrie Ingrid",
+        whoKilled: "xxMVPKillerxx",
+        lastKilled: "0001",
+        field: "instanced_map_with_the_same_mvps",
+      },
+      {
+        name: "Valkyrie Ingrid",
+        whoKilled: "xxMVPKillerxx",
+        lastKilled: "0003",
+        field: "odin_past",
+      },
+      {
+        name: "Valkyrie Reginleif",
+        whoKilled: "xxMVPKillerxx",
+        lastKilled: "0004",
+        field: "instanced_map_with_the_same_mvps",
+      },
+    ];
+    const expectedResult = [
+      {
+        name: "Valkyrie Reginleif",
+        whoKilled: "xxMVPKillerxx",
+        lastKilled: "0000",
+      },
+      {
+        name: "Valkyrie Ingrid",
+        whoKilled: "xxMVPKillerxx",
+        lastKilled: "0003",
+      },
+    ];
+    setupTableWithMVPs(valkyriesInTheWrongPlaces);
+    const MVPs = getDataFromRows();
+    expect(MVPs).toEqual(expectedResult);
   });
 });

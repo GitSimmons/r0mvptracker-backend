@@ -19,7 +19,6 @@ export const MVPAllowList: string[] = [
   "Orc Hero",
   "Samurai Specter",
   "Vesper",
-  "White Lady",
   "Baphomet",
   "Dark Lord",
   "Lord of the Dead",
@@ -37,6 +36,8 @@ export const MVPAllowList: string[] = [
   "Valkyrie Reginleif",
   "Valkyrie Ingrid",
   "Giant Octopus",
+  "Bacsojin",
+  "Evil Snake Lord",
 ];
 export const filterMVPs = (MVPs: MVP[]) =>
   MVPs.filter((mvp) => MVPAllowList.includes(mvp.name));
